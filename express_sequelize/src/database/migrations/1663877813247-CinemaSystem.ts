@@ -31,8 +31,52 @@ export default {
    * As a cinema owner I don't want to configure the seating for every show
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  up: (queryInterface: QueryInterface): Promise<void> => {
-    throw new Error('TODO: implement migration in task 4');
+  up: async (queryInterface: QueryInterface) => {
+
+    await queryInterface.createTable('movies', {
+      id: {
+        type: 'integer',
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      name: { type: 'varchar' },
+      url: { type: 'varchar' },
+      is_available: { type: 'boolean' },
+      time: { type: 'date' }
+    });
+
+    await queryInterface.createTable('movie_admin', {
+      id: {
+        type: 'integer',
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      movie_id: { type: 'integer' },
+      available_time: { type: 'varchar' },
+      showroom_id: { type: 'integer' }
+    });
+
+    await queryInterface.createTable('cinema_owner', {
+      id: {
+        type: 'integer',
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      showroom_id: { type: 'integer' },
+      ticket_price: {type: 'integer' },
+      ticket_price_premium: {type: 'integer' }
+    });
+
+    await queryInterface.createTable('seats', {
+      id: {
+        type: 'integer',
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      is_vip: { type: 'boolean' },
+      is_available: { type: 'boolean' },
+      location: {type: 'varchar' }
+    });
   },
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
